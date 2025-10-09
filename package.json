@@ -2,18 +2,60 @@
   "name": "wasm-doom",
   "type": "module",
   "private": true,
+  "description": "A typescript renderer module for running DOOM as WebAssembly in the browser",
+  "repository": "https://github.com/iam-medvedev/wasm-doom.git",
+  "homepage": "https://github.com/iam-medvedev/wasm-doom#readme",
+  "bugs": "https://github.com/iam-medvedev/wasm-doom/issues",
+  "author": "Ilya Medvedev <ilya@medvedev.im>",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/*",
+    "package.json"
+  ],
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "default": "./dist/index.js"
+  },
   "scripts": {
     "dev": "bun run build:example && bun run serve",
-    "build": "bun build ./src/index.ts --outdir dist --minify",
+    "build": "rm -rf ./dist && bun build ./src/index.ts --outdir dist --minify && tsc --project tsconfig.types.json",
     "build:example": "bun build ./src/index.ts --outdir ./example/dist",
-    "serve": "serve ./example -l 3300"
+    "serve": "serve ./example -l 3300",
+    "release": "semantic-release",
+    "prepare": "husky"
   },
   "dependencies": {
     "@assemblyscript/loader": "^0.28.8"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/github": "^11.0.6",
+    "@semantic-release/npm": "^12.0.2",
+    "@semantic-release/release-notes-generator": "^14.1.0",
     "@types/bun": "1.2.23",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.3",
+    "prettier": "^3.6.2",
+    "semantic-release": "^24.2.9",
     "serve": "^14.2.5",
     "typescript": "^5.9.3"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 120
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx,json,md}": [
+      "prettier --write"
+    ]
   }
 }
