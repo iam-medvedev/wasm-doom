@@ -3,8 +3,10 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun build ./src/index.ts --outdir example/dist --minify && serve ./example -l 3300",
-    "build": "bun build ./src/index.ts --outdir dist --minify"
+    "dev": "bun run build:example && bun run serve",
+    "build": "bun build ./src/index.ts --outdir dist --minify",
+    "build:example": "bun build ./src/index.ts --outdir ./example/dist",
+    "serve": "serve ./example -l 3300"
   },
   "dependencies": {
     "@assemblyscript/loader": "^0.28.8"
