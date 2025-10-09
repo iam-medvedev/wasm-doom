@@ -132,3 +132,9 @@ bun run dev
 
 - **DOOM** — Originally created by [id Software](https://github.com/id-Software/DOOM) (1993)
 - **WebAssembly port** — Based on [WebAssembly from Scratch: From FizzBuzz to DooM](https://github.com/diekmann/wasm-fizzbuzz/) by Cornelius Diekmann
+
+## License
+
+DOOM is originally created by id Software and released under the GNU General Public License v2.0.
+
+The WebAssembly port maintains the same GPL-2.0 license from the original DOOM source code.

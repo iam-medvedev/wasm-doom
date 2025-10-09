@@ -11,6 +11,7 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist/*",
+    "wasm",
     "package.json"
   ],
   "exports": {
