@@ -1,6 +1,6 @@
-import { instantiateStreaming } from "@assemblyscript/loader";
-import { Logger } from "./logger";
-import { Keyboard } from "./keyboard";
+import { instantiateStreaming } from '@assemblyscript/loader';
+import { Logger } from './logger';
+import { Keyboard } from './keyboard';
 
 function noop() {}
 
@@ -82,8 +82,7 @@ export class DOOM {
   /** Native DOOM render height */
   private doomHeight = 400 as const;
   /** URL to the DOOM WASM binary */
-  private wasmURL =
-    "https://cdn.jsdelivr.net/gh/diekmann/wasm-fizzbuzz@gh-pages/doom/doom.wasm";
+  private wasmURL = 'https://cdn.jsdelivr.net/gh/diekmann/wasm-fizzbuzz@gh-pages/doom/doom.wasm';
 
   /** WebAssembly memory shared between JS and WASM (108 pages = ~6.9MB) */
   private memory = new WebAssembly.Memory({ initial: 108 });
@@ -124,9 +123,9 @@ export class DOOM {
   private async loadGame() {
     const game = await instantiateStreaming<DoomExports>(fetch(this.wasmURL), {
       js: {
-        js_console_log: this.logger ? this.logger.getMethod("log") : noop,
-        js_stdout: this.logger ? this.logger.getMethod("info") : noop,
-        js_stderr: this.logger ? this.logger.getMethod("error") : noop,
+        js_console_log: this.logger ? this.logger.getMethod('log') : noop,
+        js_stdout: this.logger ? this.logger.getMethod('info') : noop,
+        js_stderr: this.logger ? this.logger.getMethod('error') : noop,
         js_draw_screen: this.render,
         js_milliseconds_since_start: this.getMilliseconds,
       },
@@ -140,11 +139,7 @@ export class DOOM {
 
   /** Renders a frame from WASM memory buffer */
   private render = (offest: number) => {
-    const screen = new Uint8ClampedArray(
-      this.memory.buffer,
-      offest,
-      this.doomWidth * this.doomHeight * 4
-    );
+    const screen = new Uint8ClampedArray(this.memory.buffer, offest, this.doomWidth * this.doomHeight * 4);
 
     // Render by pixel
     if (this.onPixelRender) {
@@ -178,12 +173,8 @@ export class DOOM {
     const game = await this.loadGame();
 
     // Bind keyboard events
-    this.keyboard.bindKeyDown((keyCode) =>
-      game.exports.add_browser_event(0 /* KeyDown */, keyCode)
-    );
-    this.keyboard.bindKeyUp((keyCode) =>
-      game.exports.add_browser_event(1 /* KeyUp */, keyCode)
-    );
+    this.keyboard.bindKeyDown((keyCode) => game.exports.add_browser_event(0 /* KeyDown */, keyCode));
+    this.keyboard.bindKeyUp((keyCode) => game.exports.add_browser_event(1 /* KeyUp */, keyCode));
 
     // Start game
     game.exports.main();

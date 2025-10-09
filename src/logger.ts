@@ -9,13 +9,13 @@ export class Logger {
   /** Reads a UTF-8 encoded string from WebAssembly memory */
   private readWasmString = (offset: number, length: number) => {
     const bytes = new Uint8Array(this.memory.buffer, offset, length);
-    return new TextDecoder("utf8").decode(bytes);
+    return new TextDecoder('utf8').decode(bytes);
   };
 
   /** Returns a logging function that can be called from WASM */
-  public getMethod = (method: "log" | "info" | "error") => {
+  public getMethod = (method: 'log' | 'info' | 'error') => {
     return (offset: number, length: number) => {
-      const lines = this.readWasmString(offset, length).split("\n");
+      const lines = this.readWasmString(offset, length).split('\n');
 
       for (let i = 0; i < lines.length; ++i) {
         if (lines[i]?.length === 0) {

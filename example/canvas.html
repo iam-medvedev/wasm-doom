@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -19,37 +19,26 @@
 
       <footer>
         <h3>About this demo</h3>
-        <p>
-          Canvas API rendering for `wasm-doom` — high performance mode using
-          ImageData.
-        </p>
-        <p>
-          <b>Controls:</b> Arrow keys to move, Ctrl to shoot, Space to open
-          doors, Enter to start, Esc for menu
-        </p>
+        <p>Canvas API rendering for `wasm-doom` — high performance mode using ImageData.</p>
+        <p><b>Controls:</b> Arrow keys to move, Ctrl to shoot, Space to open doors, Enter to start, Esc for menu</p>
         <p>
           <a href="index.html">← Back to Examples</a>
           |
-          <a href="https://github.com/imedvedev/wasm-doom"
-            >wasm-doom on GitHub</a
-          >
+          <a href="https://github.com/imedvedev/wasm-doom">wasm-doom on GitHub</a>
           |
-          <a
-            href="https://github.com/imedvedev/wasm-doom/tree/main/example/canvas.html"
-            >View Source</a
-          >
+          <a href="https://github.com/imedvedev/wasm-doom/tree/main/example/canvas.html">View Source</a>
         </p>
       </footer>
     </main>
 
     <script type="module">
-      import { DOOM } from "./dist/index.js";
+      import { DOOM } from './dist/index.js';
 
       const screenWidth = 640;
       const screenHeight = 400;
 
-      const canvas = document.getElementById("game");
-      const ctx = canvas.getContext("2d");
+      const canvas = document.getElementById('game');
+      const ctx = canvas.getContext('2d');
       canvas.height = screenHeight;
       canvas.width = screenWidth;
 

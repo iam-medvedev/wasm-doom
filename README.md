@@ -25,13 +25,13 @@ yarn add -D wasm-doom
 The most performant way to render DOOM using the Canvas API:
 
 ```ts
-import { DOOM } from "wasm-doom";
+import { DOOM } from 'wasm-doom';
 
 const screenWidth = 640;
 const screenHeight = 400;
 
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
 canvas.width = screenWidth;
 canvas.height = screenHeight;
 
@@ -53,7 +53,7 @@ await game.start();
 For custom rendering implementations where you need individual pixel control:
 
 ```ts
-import { DOOM } from "wasm-doom";
+import { DOOM } from 'wasm-doom';
 
 const game = new DOOM({
   screenWidth: 320,

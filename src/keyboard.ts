@@ -9,24 +9,24 @@ export class Keyboard {
   /** Binds a callback to keydown events */
   public bindKeyDown = (callback: KeyboardFn) => {
     this.target.addEventListener(
-      "keydown",
+      'keydown',
       (e) => {
         callback(this.mapDoomKeyCode(e.keyCode));
         e.preventDefault();
       },
-      false
+      false,
     );
   };
 
   /** Binds a callback to keyup events */
   public bindKeyUp = (callback: KeyboardFn) => {
     this.target.addEventListener(
-      "keyup",
+      'keyup',
       (e) => {
         callback(this.mapDoomKeyCode(e.keyCode));
         e.preventDefault();
       },
-      false
+      false,
     );
   };
 

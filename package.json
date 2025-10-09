@@ -1,7 +1,6 @@
 {
   "name": "wasm-doom",
   "type": "module",
-  "private": true,
   "description": "A typescript renderer module for running DOOM as WebAssembly in the browser",
   "repository": "https://github.com/iam-medvedev/wasm-doom.git",
   "homepage": "https://github.com/iam-medvedev/wasm-doom#readme",
