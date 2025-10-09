@@ -76,7 +76,7 @@ await game.start();
 new DOOM({
   screenWidth: number;              // Width of the output screen in pixels
   screenHeight: number;             // Height of the output screen in pixels
-  wasmURL?: string;                 // Optional custom URL to DOOM WASM binary (default: jsDelivr CDN)
+  wasmURL?: string;                 // Optional custom URL to DOOM WASM binary (default: https://cdn.jsdelivr.net/npm/wasm-doom/wasm/doom.wasm)
   keyboardTarget?: HTMLElement;     // Optional target element for keyboard events
   enableLogs?: boolean;             // Enable WASM console output (default: false)
   onPixelRender?: (event) => void;  // Per-pixel render callback

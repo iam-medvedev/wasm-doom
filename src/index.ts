@@ -82,7 +82,7 @@ export class DOOM {
   /** Native DOOM render height */
   private doomHeight = 400 as const;
   /** URL to the DOOM WASM binary */
-  private wasmURL = 'https://cdn.jsdelivr.net/gh/diekmann/wasm-fizzbuzz@gh-pages/doom/doom.wasm';
+  private wasmURL = 'https://cdn.jsdelivr.net/npm/wasm-doom/wasm/doom.wasm';
 
   /** WebAssembly memory shared between JS and WASM (108 pages = ~6.9MB) */
   private memory = new WebAssembly.Memory({ initial: 108 });
