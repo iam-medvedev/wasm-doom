@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOOM WASM — Examples</title>
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+      p {
+        font-size: 14px;
+        margin: 10px 0;
+      }
+      section {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      article {
+        padding: 0 10px;
+        background: #fff;
+        border: 2px inset #808080;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>DOOM WASM Examples</h1>
+      <p>Choose a rendering demo to see <code>wasm-doom</code> in action.</p>
+
+      <section>
+        <article>
+          <h2><a href="canvas.html">Canvas Rendering</a></h2>
+          <p>High-performance rendering using Canvas API and ImageData.</p>
+          <p><b>Resolution:</b> 640x400 | <b>Performance:</b> Fast</p>
+        </article>
+
+        <article>
+          <h2><a href="divs.html">DOM Rendering</a></h2>
+          <p>Pixel-by-pixel rendering using individual div elements.</p>
+          <p>
+            <b>Resolution:</b> 320x200 | <b>Performance:</b> Slow (demo
+            purposes)
+          </p>
+        </article>
+      </section>
+
+      <footer>
+        <p>
+          <a href="https://github.com/imedvedev/wasm-doom"
+            >wasm-doom on GitHub</a
+          >
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>

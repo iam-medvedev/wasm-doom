@@ -1,0 +1,17 @@
+{
+  "name": "wasm-doom",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun build ./src/index.ts --outdir example/dist --minify && serve ./example -l 3300",
+    "build": "bun build ./src/index.ts --outdir dist --minify"
+  },
+  "dependencies": {
+    "@assemblyscript/loader": "^0.28.8"
+  },
+  "devDependencies": {
+    "@types/bun": "1.2.23",
+    "serve": "^14.2.5",
+    "typescript": "^5.9.3"
+  }
+}
