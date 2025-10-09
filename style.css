@@ -3,12 +3,14 @@ body {
   font-family: Arial, sans-serif;
   margin: 20px;
 }
+
 main {
   display: flex;
   align-items: center;
   flex-direction: column;
   gap: 10px;
 }
+
 footer {
   padding: 0 10px;
   background: #c0c0c0;
