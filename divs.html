@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOOM WASM — Divs Render</title>
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+      #game {
+        position: relative;
+        border: 1px solid black;
+      }
+      #game span {
+        width: 1px;
+        height: 1px;
+        position: absolute;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div id="game"></div>
+
+      <footer>
+        <h3>About this demo</h3>
+        <p>
+          DOM-based rendering for `wasm-doom` — pixel-by-pixel mode using
+          individual div elements.
+        </p>
+        <p>
+          <b>Controls:</b> Arrow keys to move, Ctrl to shoot, Space to open
+          doors, Enter to start, Esc for menu
+        </p>
+        <p>
+          <a href="index.html">← Back to Examples</a>
+          |
+          <a href="https://github.com/imedvedev/wasm-doom"
+            >wasm-doom on GitHub</a
+          >
+          |
+          <a
+            href="https://github.com/imedvedev/wasm-doom/tree/main/example/divs.html"
+            >View Source</a
+          >
+        </p>
+      </footer>
+    </main>
+
+    <script type="module">
+      import { DOOM } from "./dist/index.js";
+
+      const screenWidth = 320;
+      const screenHeight = 200;
+
+      const container = document.getElementById("game");
+      container.style.height = screenHeight + "px";
+      container.style.width = screenWidth + "px";
+
+      const pixels = [];
+      for (let y = 0; y < screenHeight; y++) {
+        pixels[y] = [];
+        for (let x = 0; x < screenWidth; x++) {
+          const pixelElement = document.createElement("span");
+          pixelElement.style.left = x + "px";
+          pixelElement.style.top = y + "px";
+          container.appendChild(pixelElement);
+          pixels[y][x] = pixelElement;
+        }
+      }
+
+      const game = new DOOM({
+        screenHeight,
+        screenWidth,
+        enableLogs: true,
+        onPixelRender: ({ x, y, r, g, b, a }) => {
+          const pixel = pixels[y][x];
+          pixel.style.background = `rgba(${[r, g, b, a].join(", ")})`;
+        },
+      });
+
+      game.start();
+    </script>
+  </body>
+</html>
