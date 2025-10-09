@@ -436,7 +436,7 @@ function noop() {}
 class DOOM {
   doomWidth = 640;
   doomHeight = 400;
-  wasmURL = "https://cdn.jsdelivr.net/gh/diekmann/wasm-fizzbuzz@gh-pages/doom/doom.wasm";
+  wasmURL = "https://cdn.jsdelivr.net/npm/wasm-doom/wasm/doom.wasm";
   memory = new WebAssembly.Memory({ initial: 108 });
   logger = null;
   keyboard;
