@@ -120,7 +120,8 @@ await game.start();
 See the [example](./example) directory for working demonstrations:
 
 - **canvas.html** — Canvas rendering
-- **divs.html** — DOM-based rendering
+- **divs.html** — DOM-based pixel-by-pixel rendering
+- **tiling.html** — DOM rendering using tiling technique
 
 Run examples locally:
 
