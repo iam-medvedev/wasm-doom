@@ -1,34 +1,8 @@
 {
   "name": "wasm-doom",
-  "type": "module",
-  "description": "A typescript renderer module for running DOOM as WebAssembly in the browser",
-  "repository": "https://github.com/iam-medvedev/wasm-doom.git",
-  "homepage": "https://github.com/iam-medvedev/wasm-doom#readme",
-  "bugs": "https://github.com/iam-medvedev/wasm-doom/issues",
   "author": "Ilya Medvedev <ilya@medvedev.im>",
-  "license": "MIT",
+  "repository": "https://github.com/iam-medvedev/wasm-doom.git",
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist/*",
-    "wasm",
-    "package.json"
-  ],
-  "exports": {
-    "types": "./dist/index.d.ts",
-    "default": "./dist/index.js"
-  },
-  "scripts": {
-    "dev": "bun run build:example && bun run serve",
-    "build": "rm -rf ./dist && bun build ./src/index.ts --outdir dist --minify && tsc --project tsconfig.types.json",
-    "build:example": "bun build ./src/index.ts --outdir ./example/dist",
-    "serve": "serve ./example -l 3300",
-    "release": "semantic-release",
-    "prepare": "husky"
-  },
-  "dependencies": {
-    "@assemblyscript/loader": "^0.28.8"
-  },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
@@ -43,19 +17,42 @@
     "serve": "^14.2.5",
     "typescript": "^5.9.3"
   },
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "all",
-    "printWidth": 120
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "default": "./dist/index.js"
   },
+  "bugs": "https://github.com/iam-medvedev/wasm-doom/issues",
+  "description": "A typescript renderer module for running DOOM as WebAssembly in the browser",
+  "files": [
+    "dist/*",
+    "wasm",
+    "package.json"
+  ],
+  "homepage": "https://github.com/iam-medvedev/wasm-doom#readme",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
   },
+  "license": "MIT",
   "lint-staged": {
     "*.{ts,tsx,json,md}": [
       "prettier --write"
     ]
-  }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 120
+  },
+  "scripts": {
+    "dev": "bun run build:example && bun run serve",
+    "build": "rm -rf ./dist && bun build ./src/index.ts --outdir dist --minify && tsc --project tsconfig.types.json",
+    "build:example": "bun build ./src/index.ts --outdir ./example/dist",
+    "serve": "serve ./example -l 3300",
+    "release": "semantic-release",
+    "prepare": "husky"
+  },
+  "type": "module",
+  "types": "./dist/index.d.ts"
 }

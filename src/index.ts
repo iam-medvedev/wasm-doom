@@ -1,29 +1,7 @@
-import { instantiateStreaming } from '@assemblyscript/loader';
 import { Logger } from './logger';
 import { Keyboard } from './keyboard';
 
 function noop() {}
-
-type DoomExports = {
-  /**
-   * Adds a browser keyboard event to DOOM's event queue
-   * @param type Event type (0 = KeyDown, 1 = KeyUp) - note: typo preserved from original WASM
-   * @param keyCode DOOM-compatible key code
-   */
-  add_browser_event(type: number, keyCode: number): void;
-
-  /**
-   * Executes one iteration of the DOOM game loop
-   * Should be called each frame via requestAnimationFrame
-   */
-  doom_loop_step(): void;
-
-  /**
-   * Initializes and starts the DOOM game
-   * Must be called once before doom_loop_step
-   */
-  main(): void;
-};
 
 type OnPixelRenderEvent = {
   /** X coordinate of the pixel */
@@ -121,7 +99,7 @@ export class DOOM {
 
   /** Loads and instantiates the DOOM WebAssembly module */
   private async loadGame() {
-    const game = await instantiateStreaming<DoomExports>(fetch(this.wasmURL), {
+    const game = await WebAssembly.instantiateStreaming(fetch(this.wasmURL), {
       js: {
         js_console_log: this.logger ? this.logger.getMethod('log') : noop,
         js_stdout: this.logger ? this.logger.getMethod('info') : noop,
@@ -173,13 +151,13 @@ export class DOOM {
     const game = await this.loadGame();
 
     // Bind keyboard events
-    this.keyboard.bindKeyDown((keyCode) => game.exports.add_browser_event(0 /* KeyDown */, keyCode));
-    this.keyboard.bindKeyUp((keyCode) => game.exports.add_browser_event(1 /* KeyUp */, keyCode));
+    this.keyboard.bindKeyDown((keyCode) => game.instance.exports.add_browser_event(0 /* KeyDown */, keyCode));
+    this.keyboard.bindKeyUp((keyCode) => game.instance.exports.add_browser_event(1 /* KeyUp */, keyCode));
 
     // Start game
-    game.exports.main();
+    game.instance.exports.main();
     const step = () => {
-      game.exports.doom_loop_step();
+      game.instance.exports.doom_loop_step();
       window.requestAnimationFrame(step);
     };
     window.requestAnimationFrame(step);
