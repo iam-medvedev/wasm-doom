@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOOM WASM — Tiling Render</title>
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+      #game {
+        position: relative;
+        border: 1px solid black;
+        display: grid;
+      }
+      #game .chunk {
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div id="game"></div>
+
+      <footer>
+        <h3>About this demo</h3>
+        <p>
+          DOM-based rendering using tiling (<code>linear-gradient</code>) — reduces DOM elements by grouping pixels into
+          tiles
+        </p>
+        <p><b>Controls:</b> Arrow keys to move, Ctrl to shoot, Space to open doors, Enter to start, Esc for menu</p>
+        <p>
+          <label for="chunk-size">Tile Size: </label>
+          <select id="chunk-size">
+            <option value="4">4x4 pixels</option>
+            <option value="8">8x8 pixels</option>
+            <option value="16">16x16 pixels</option>
+            <option value="32">32x32 pixels</option>
+            <option value="64">64x64 pixels</option>
+            <option value="128">128x128 pixels</option>
+          </select>
+          <span id="stats"></span>
+        </p>
+        <p>
+          <a href="index.html">← Back to Examples</a>
+          |
+          <a href="https://github.com/iam-medvedev/wasm-doom">wasm-doom on GitHub</a>
+        </p>
+      </footer>
+    </main>
+
+    <script type="module">
+      import { DOOM } from './dist/index.js';
+
+      const screenWidth = 640;
+      const screenHeight = 400;
+
+      // Parse URL parameter or use default
+      const urlParams = new URLSearchParams(window.location.search);
+      const chunkSize = urlParams.get('size') ? parseInt(urlParams.get('size')) : 4;
+
+      const chunksX = Math.ceil(screenWidth / chunkSize);
+      const chunksY = Math.ceil(screenHeight / chunkSize);
+
+      const container = document.getElementById('game');
+      const select = document.getElementById('chunk-size');
+      const stats = document.getElementById('stats');
+
+      container.style.height = screenHeight + 'px';
+      container.style.width = screenWidth + 'px';
+      container.style.gridTemplateColumns = `repeat(${chunksX}, ${chunkSize}px)`;
+      container.style.gridTemplateRows = `repeat(${chunksY}, ${chunkSize}px)`;
+
+      // Set select value from URL
+      select.value = chunkSize;
+
+      // Handle select change - reload page with new size
+      select.addEventListener('change', (e) => {
+        const newSize = e.target.value;
+        window.location.href = `?size=${newSize}`;
+      });
+
+      // Create gradient for a chunk
+      function makeChunkGradient(pixels, chunkX, chunkY, width, height) {
+        const startX = chunkX * chunkSize;
+        const startY = chunkY * chunkSize;
+
+        // Create a 2D gradient using multiple linear-gradients
+        const gradients = [];
+        for (let y = 0; y < chunkSize; y++) {
+          const actualY = startY + y;
+          if (actualY >= height) break;
+
+          let rowStops = '';
+          for (let x = 0; x < chunkSize; x++) {
+            const actualX = startX + x;
+            if (actualX >= width) break;
+
+            const i = (actualY * width + actualX) * 4;
+            const r = pixels[i];
+            const g = pixels[i + 1];
+            const b = pixels[i + 2];
+            const color = `rgb(${r},${g},${b})`;
+            rowStops += `${color} ${x}px, ${color} ${x + 1}px, `;
+          }
+
+          gradients.push(`linear-gradient(to right, ${rowStops.slice(0, -2)}) 0 ${y}px / ${chunkSize}px 1px no-repeat`);
+        }
+
+        return gradients.join(', ');
+      }
+
+      // Create all chunk elements
+      const chunks = [];
+      for (let cy = 0; cy < chunksY; cy++) {
+        for (let cx = 0; cx < chunksX; cx++) {
+          const chunk = document.createElement('div');
+          chunk.className = 'chunk';
+          container.appendChild(chunk);
+          chunks.push({ element: chunk, x: cx, y: cy });
+        }
+      }
+
+      const totalPixels = screenWidth * screenHeight;
+      const reduction = Math.round(totalPixels / chunks.length);
+      stats.textContent = ` (${chunks.length} tiles, ${reduction}x reduction)`;
+
+      console.log(`Total chunks: ${chunks.length} (vs ${totalPixels} pixels)`);
+
+      const game = new DOOM({
+        screenHeight,
+        screenWidth,
+        enableLogs: true,
+        onFrameRender: ({ screen }) => {
+          chunks.forEach(({ element, x, y }) => {
+            element.style.background = makeChunkGradient(screen, x, y, screenWidth, screenHeight);
+          });
+        },
+      });
+
+      game.start();
+    </script>
+  </body>
+</html>
